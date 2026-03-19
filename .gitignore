@@ -29,6 +29,7 @@ dist
 
 # Turbo Defaults
 Turbo*/
+TurboRepoREADME.md
 
 # Debug
 npm-debug.log*
