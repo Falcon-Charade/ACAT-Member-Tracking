@@ -20,6 +20,9 @@ importers:
 
   apps/backend:
     dependencies:
+      '@acat/shared-types':
+        specifier: workspace:*
+        version: link:../../packages/shared-types
       fastify:
         specifier: ^5.0.0
         version: 5.8.2
@@ -48,6 +51,8 @@ importers:
       typescript-eslint:
         specifier: ^8.0.0
         version: 8.57.1(eslint@9.39.4)(typescript@5.9.2)
+
+  packages/shared-types: {}
 
 packages:
 
