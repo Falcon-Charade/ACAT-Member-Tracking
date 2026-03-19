@@ -11,7 +11,11 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "dev:backend": "pnpm --filter @acat/backend dev",
+    "build:backend": "pnpm --filter @acat/backend build",
+    "lint:backend": "pnpm --filter @acat/backend lint",
+    "format:backend": "pnpm --filter @acat/backend format"
   },
   "devDependencies": {
     "prettier": "^3.7.4",
