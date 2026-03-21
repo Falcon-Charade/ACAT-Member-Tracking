@@ -1,4 +1,4 @@
-import { MEMBER_ROLES, MEMBER_STAGES } from "./member.types";
+import { MEMBER_ROLES, MEMBER_STAGES } from "./member.types.js";
 
 export const memberFieldDocumentation = {
     id: {

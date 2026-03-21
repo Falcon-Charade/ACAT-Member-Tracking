@@ -1,4 +1,4 @@
-import type { Member, MemberRole, MemberStage } from './member.types';
+import type { Member, MemberRole, MemberStage } from './member.types.js';
 
 /**
  * Public API DTO for Member, excludes sensitive fields like 'id' and 'notes'.
