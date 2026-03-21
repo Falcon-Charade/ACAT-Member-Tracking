@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./member/member.docs": "./member/member.docs.ts",
-    "./member/member.types": "./member/member.types.ts"
+    "./member/member.docs": "./src/member/member.docs.ts",
+    "./member/member.types": "./src/member/member.types.ts"
   }
 }

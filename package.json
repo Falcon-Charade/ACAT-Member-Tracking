@@ -12,15 +12,18 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
     "test": "turbo run test",
+    "test:detailed": "turbo run test -- --reporter=verbose",
     "dev:backend": "pnpm --filter @acat/backend dev",
     "build:backend": "pnpm --filter @acat/backend build",
     "lint:backend": "pnpm --filter @acat/backend lint",
-    "format:backend": "pnpm --filter @acat/backend format"
+    "format:backend": "pnpm --filter @acat/backend format",
+    "test:vitest:debug": "node --inspect-brk ./node_modules/vitest/vitest.mjs run"
   },
   "devDependencies": {
     "prettier": "^3.7.4",
     "turbo": "^2.8.17",
-    "typescript": "5.9.2"
+    "typescript": "5.9.2",
+    "vitest": "^4.0.0"
   },
   "engines": {
     "node": ">=18"
