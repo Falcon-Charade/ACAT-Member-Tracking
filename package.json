@@ -17,6 +17,10 @@
     "build:backend": "pnpm --filter @acat/backend build",
     "lint:backend": "pnpm --filter @acat/backend lint",
     "format:backend": "pnpm --filter @acat/backend format",
+    "dev:web": "pnpm --filter @acat/web dev",
+    "build:web": "pnpm --filter @acat/web build",
+    "lint:web": "pnpm --filter @acat/web lint",
+    "check-types:web": "pnpm --filter @acat/web check-types",
     "test:vitest:debug": "node --inspect-brk ./node_modules/vitest/vitest.mjs run"
   },
   "devDependencies": {
