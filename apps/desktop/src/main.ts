@@ -1,10 +1,11 @@
 // apps/desktop/src/main.ts
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const isDev = Boolean(process.env.VITE_DEV_SERVER_URL);
+const currentDir = path.dirname(fileURLToPath(import.meta.url));
 
-function createMainWindow(): BrowserWindow {
+export function createMainWindow(): BrowserWindow {
   const mainWindow = new BrowserWindow({
     width: 1280,
     height: 800,
@@ -12,7 +13,7 @@ function createMainWindow(): BrowserWindow {
     minHeight: 700,
     show: false,
     webPreferences: {
-      preload: path.join(__dirname, "../preload/preload.js"),
+      preload: path.join(currentDir, "../preload/preload.js"),
 
       // Important security settings
       nodeIntegration: false,
@@ -25,8 +26,10 @@ function createMainWindow(): BrowserWindow {
     mainWindow.show();
   });
 
-  if (isDev) {
-    mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL!);
+  const devServerUrl = process.env.VITE_DEV_SERVER_URL;
+
+  if (devServerUrl) {
+    mainWindow.loadURL(devServerUrl);
     mainWindow.webContents.openDevTools({ mode: "detach" });
   } else {
     mainWindow.loadFile(
@@ -37,24 +40,7 @@ function createMainWindow(): BrowserWindow {
   return mainWindow;
 }
 
-app.whenReady().then(() => {
-  registerIpcHandlers();
-  createMainWindow();
-
-  app.on("activate", () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createMainWindow();
-    }
-  });
-});
-
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
-});
-
-function registerIpcHandlers(): void {
+export function registerIpcHandlers(): void {
   ipcMain.handle("app:get-version", () => {
     return app.getVersion();
   });
@@ -62,4 +48,27 @@ function registerIpcHandlers(): void {
   ipcMain.handle("app:get-platform", () => {
     return process.platform;
   });
+}
+
+export function startApp(): void {
+  void app.whenReady().then(() => {
+    registerIpcHandlers();
+    createMainWindow();
+
+    app.on("activate", () => {
+      if (BrowserWindow.getAllWindows().length === 0) {
+        createMainWindow();
+      }
+    });
+  });
+
+  app.on("window-all-closed", () => {
+    if (process.platform !== "darwin") {
+      app.quit();
+    }
+  });
+}
+
+if (!process.env.VITEST) {
+  startApp();
 }

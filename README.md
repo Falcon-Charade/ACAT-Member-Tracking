@@ -62,7 +62,7 @@ acat-member-tracking/
 │  ├─ docker/               # Container-related setup
 │  └─ cloud/                # Deployment/infrastructure configuration
 │
-├─ .git/
+├─ .github/
 │  └─ workflows/            # CI/CD workflows
 │
 ├─ .gitignore               # Local files to ignore pushing to repo
@@ -72,3 +72,18 @@ acat-member-tracking/
 ├─ README.md
 └─ tsconfig.base.json       # Base configuration for tests
 ````
+
+## Continuous Integration
+
+Pull requests run automated quality checks through GitHub Actions.
+
+The CI workflow runs:
+
+- `pnpm lint`
+- `pnpm check-types`
+- `pnpm build`
+- `pnpm test`
+
+The workflow is defined in `.github/workflows/ci.yml`.
+
+Merges to `main` are protected by required status checks, so lint, type, build, or test failures block merging until fixed.
