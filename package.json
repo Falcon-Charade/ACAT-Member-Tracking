@@ -20,10 +20,16 @@
     "dev:web": "pnpm --filter @acat/web dev",
     "build:web": "pnpm --filter @acat/web build",
     "lint:web": "pnpm --filter @acat/web lint",
+    "prepublishOnly": "pnpm --filter @acat/desktop lint",
     "check-types:web": "pnpm --filter @acat/web check-types",
-    "test:vitest:debug": "node --inspect-brk ./node_modules/vitest/vitest.mjs run"
+    "test:vitest:debug": "node --inspect-brk ./node_modules/vitest/vitest.mjs run",
+    "dev:desktop": "pnpm --filter @acat/desktop dev",
+    "build:desktop": "pnpm --filter @acat/desktop build",
+    "package:desktop": "pnpm build:web && pnpm build:desktop && pnpm --filter @acat/desktop run package",
+    "dist:desktop": "pnpm build:web && pnpm build:desktop && pnpm --filter @acat/desktop run dist"
   },
   "devDependencies": {
+    "electron": "^42.5.0",
     "prettier": "^3.7.4",
     "turbo": "^2.8.17",
     "typescript": "5.9.2",
