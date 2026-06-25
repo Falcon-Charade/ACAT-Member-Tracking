@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - 'Milestone-*'
   issues:
     types:
       - opened
