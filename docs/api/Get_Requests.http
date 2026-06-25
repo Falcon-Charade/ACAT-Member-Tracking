@@ -1,0 +1,14 @@
+### Get all requests
+GET http://localhost:3001/api
+### Get API health
+GET http://localhost:3001/api/health
+### Get API documentation
+GET http://localhost:3001/api/doc
+### Get API documentation for DTO
+GET http://localhost:3001/api/doc/DTO
+### Get API documentation for member DTO
+GET http://localhost:3001/api/doc/DTO/member
+### Get API documentation for session DTO
+GET http://localhost:3001/api/doc/DTO/session
+### Get API documentation for permissions DTO
+GET http://localhost:3001/api/doc/DTO/permissions

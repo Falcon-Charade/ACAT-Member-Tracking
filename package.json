@@ -1,0 +1,41 @@
+{
+  "name": "ACAT-Member-Tracking",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Falcon Charade",
+  "private": true,
+  "packageManager": "pnpm@10.32.1",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check-types": "turbo run check-types",
+    "test": "turbo run test",
+    "test:detailed": "turbo run test -- --reporter=verbose",
+    "dev:backend": "pnpm --filter @acat/backend dev",
+    "build:backend": "pnpm --filter @acat/backend build",
+    "lint:backend": "pnpm --filter @acat/backend lint",
+    "format:backend": "pnpm --filter @acat/backend format",
+    "dev:web": "pnpm --filter @acat/web dev",
+    "build:web": "pnpm --filter @acat/web build",
+    "lint:web": "pnpm --filter @acat/web lint",
+    "prepublishOnly": "pnpm --filter @acat/desktop lint",
+    "check-types:web": "pnpm --filter @acat/web check-types",
+    "test:vitest:debug": "node --inspect-brk ./node_modules/vitest/vitest.mjs run",
+    "dev:desktop": "pnpm --filter @acat/desktop dev",
+    "build:desktop": "pnpm --filter @acat/desktop build",
+    "package:desktop": "pnpm build:web && pnpm build:desktop && pnpm --filter @acat/desktop run package",
+    "dist:desktop": "pnpm build:web && pnpm build:desktop && pnpm --filter @acat/desktop run dist"
+  },
+  "devDependencies": {
+    "electron": "^42.5.0",
+    "prettier": "^3.7.4",
+    "turbo": "^2.8.17",
+    "typescript": "5.9.2",
+    "vitest": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "name": "@acat/desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Desktop wrapper for the ACAT Member Tracking application",
+  "main": "dist/main/main.js",
+  "scripts": {
+    "dev": "concurrently -k \"pnpm --filter web dev\" \"wait-on http://localhost:5173 && cross-env VITE_DEV_SERVER_URL=http://localhost:5173 electron-vite dev\"",
+    "build": "electron-vite build",
+    "test": "vitest run",
+    "package": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "concurrently": "^10.0.3",
+    "cross-env": "^10.1.0",
+    "electron": "^42.5.0",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^5.0.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.1",
+    "vitest": "^4.0.0",
+    "wait-on": "^9.0.10"
+  },
+  "build": {
+    "appId": "com.acat.membertracking",
+    "productName": "ACAT Member Tracking",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "package.json",
+      "dist/**/*",
+      {
+        "from": "../web/dist",
+        "to": "web/dist",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": "nsis"
+    }
+  }
+}

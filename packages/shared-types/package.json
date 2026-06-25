@@ -1,0 +1,16 @@
+{
+  "name": "@acat/shared-types",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./member/member.docs": "./src/member/member.docs.ts",
+    "./member/member.types": "./src/member/member.types.ts"
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^4.0.0"
+  }
+}
