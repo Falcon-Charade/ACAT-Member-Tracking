@@ -35,20 +35,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout badges branch
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: badges
-          path: badges-branch
-        continue-on-error: true
+          fetch-depth: 0
 
-      - name: Create badges branch if missing
+      - name: Prepare badges branch
         run: |
-          if [ ! -d "badges-branch/.git" ]; then
-            mkdir badges-branch
-            cd badges-branch
-            git init
-            git checkout -b badges
+          if git ls-remote --exit-code --heads origin badges; then
+            git fetch origin badges
+            git checkout badges
+          else
+            git checkout --orphan badges
+            git rm -rf . || true
           fi
 
       - name: Generate badge JSON
@@ -57,7 +56,6 @@ jobs:
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
         run: |
-          cd badges-branch
           mkdir -p badges
 
           REPO_FULL="$OWNER/$REPO"
@@ -77,9 +75,6 @@ jobs:
             --jq ".[] | select(.title == env.LATEST_MILESTONE)")
 
           if [ -z "$milestone_json" ]; then
-            milestone_open=0
-            milestone_closed=0
-            milestone_percent=0
             milestone_message="not found"
             milestone_color="lightgrey"
           else
@@ -146,8 +141,6 @@ jobs:
 
       - name: Commit badges
         run: |
-          cd badges-branch
-
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
