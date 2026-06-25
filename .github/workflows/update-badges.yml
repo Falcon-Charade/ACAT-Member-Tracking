@@ -1,0 +1,162 @@
+name: Update project badges
+
+on:
+  push:
+    branches:
+      - main
+  issues:
+    types:
+      - opened
+      - closed
+      - reopened
+      - deleted
+      - transferred
+      - labeled
+      - unlabeled
+  milestone:
+    types:
+      - created
+      - closed
+      - opened
+      - edited
+      - deleted
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: read
+
+env:
+  # Manually update this when you want the "latest milestone" badge to point elsewhere.
+  LATEST_MILESTONE: ${{ vars.LATEST_MILESTONE }}
+
+jobs:
+  update-badges:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout badges branch
+        uses: actions/checkout@v4
+        with:
+          ref: badges
+          path: badges-branch
+        continue-on-error: true
+
+      - name: Create badges branch if missing
+        run: |
+          if [ ! -d "badges-branch/.git" ]; then
+            mkdir badges-branch
+            cd badges-branch
+            git init
+            git checkout -b badges
+          fi
+
+      - name: Generate badge JSON
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+        run: |
+          cd badges-branch
+          mkdir -p badges
+
+          REPO_FULL="$OWNER/$REPO"
+
+          open_issues=$(gh api "/search/issues?q=repo:$REPO_FULL+is:issue+is:open" --jq '.total_count')
+          closed_issues=$(gh api "/search/issues?q=repo:$REPO_FULL+is:issue+is:closed" --jq '.total_count')
+
+          total_issues=$((open_issues + closed_issues))
+
+          if [ "$total_issues" -eq 0 ]; then
+            project_percent=0
+          else
+            project_percent=$((closed_issues * 100 / total_issues))
+          fi
+
+          milestone_json=$(gh api "/repos/$REPO_FULL/milestones?state=all&per_page=100" \
+            --jq ".[] | select(.title == env.LATEST_MILESTONE)")
+
+          if [ -z "$milestone_json" ]; then
+            milestone_open=0
+            milestone_closed=0
+            milestone_percent=0
+            milestone_message="not found"
+            milestone_color="lightgrey"
+          else
+            milestone_open=$(echo "$milestone_json" | jq '.open_issues')
+            milestone_closed=$(echo "$milestone_json" | jq '.closed_issues')
+            milestone_total=$((milestone_open + milestone_closed))
+
+            if [ "$milestone_total" -eq 0 ]; then
+              milestone_percent=0
+            else
+              milestone_percent=$((milestone_closed * 100 / milestone_total))
+            fi
+
+            milestone_message="${milestone_percent}%"
+            milestone_color="blue"
+          fi
+
+          project_color="red"
+          if [ "$project_percent" -ge 80 ]; then
+            project_color="brightgreen"
+          elif [ "$project_percent" -ge 50 ]; then
+            project_color="yellow"
+          elif [ "$project_percent" -ge 25 ]; then
+            project_color="orange"
+          fi
+
+          issues_color="brightgreen"
+          if [ "$open_issues" -gt 0 ]; then
+            issues_color="yellow"
+          fi
+          if [ "$open_issues" -gt 10 ]; then
+            issues_color="orange"
+          fi
+          if [ "$open_issues" -gt 25 ]; then
+            issues_color="red"
+          fi
+
+          cat > badges/open-issues.json <<EOF
+          {
+            "schemaVersion": 1,
+            "label": "open issues",
+            "message": "$open_issues remaining",
+            "color": "$issues_color"
+          }
+          EOF
+
+          cat > badges/project-complete.json <<EOF
+          {
+            "schemaVersion": 1,
+            "label": "project complete",
+            "message": "$project_percent%",
+            "color": "$project_color"
+          }
+          EOF
+
+          cat > badges/latest-milestone.json <<EOF
+          {
+            "schemaVersion": 1,
+            "label": "$LATEST_MILESTONE",
+            "message": "$milestone_message",
+            "color": "$milestone_color"
+          }
+          EOF
+
+      - name: Commit badges
+        run: |
+          cd badges-branch
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add badges/*.json
+
+          if git diff --cached --quiet; then
+            echo "No badge changes."
+            exit 0
+          fi
+
+          git commit -m "chore: update project badges"
+          git push origin badges

@@ -1,5 +1,10 @@
 # ACAT Member Tracking
 
+[![CI Checks](https://github.com/Falcon-Charade/ACAT-Member-Tracking/actions/workflows/ci.yml/badge.svg?branch=Milestone-1)](https://github.com/Falcon-Charade/ACAT-Member-Tracking/actions/workflows/ci.yml)
+![Open Issues](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Falcon-Charade/ACAT-Member-Tracking/badges/badges/open-issues.json)
+![Project Completion](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Falcon-Charade/ACAT-Member-Tracking/badges/badges/project-complete.json)
+![Latest Milestone Progress](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Falcon-Charade/ACAT-Member-Tracking/badges/badges/latest-milestone.json)
+
 ACAT Member Tracking is a multi-platform application for viewing and managing member data stored in a single Google Sheet.
 
 The system is designed to support:
