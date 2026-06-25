@@ -125,7 +125,7 @@ jobs:
           cat > badges/project-complete.json <<EOF
           {
             "schemaVersion": 1,
-            "label": "project complete",
+            "label": "project completion",
             "message": "$project_percent%",
             "color": "$project_color"
           }
