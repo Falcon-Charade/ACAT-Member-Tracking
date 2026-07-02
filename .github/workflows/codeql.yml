@@ -61,7 +61,7 @@ jobs:
 
       - name: Build Android app
         working-directory: apps/android
-        run: ./gradle :app:assembleDebug --no-daemon
+        run: ./gradlew :app:assembleDebug --no-daemon
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
