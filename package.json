@@ -33,7 +33,7 @@
     "prettier": "^3.7.4",
     "turbo": "^2.8.17",
     "typescript": "5.9.2",
-    "vitest": "^4.0.0"
+    "vitest": "^4.1.9"
   },
   "engines": {
     "node": ">=20.19.0"
