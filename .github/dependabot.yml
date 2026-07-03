@@ -8,7 +8,8 @@ updates:
       day: "monday"
       time: "08:00"
       timezone: "Australia/Brisbane"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 3
+    rebase-strategy: auto
     commit-message:
       prefix: "chore"
       include: "scope"
