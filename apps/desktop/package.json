@@ -19,7 +19,7 @@
     "node": ">=20.19.0"
   },
   "devDependencies": {
-    "@types/node": "^26.0.0",
+    "@types/node": "^26.1.0",
     "concurrently": "^10.0.3",
     "cross-env": "^10.1.0",
     "electron": "^42.5.0",
