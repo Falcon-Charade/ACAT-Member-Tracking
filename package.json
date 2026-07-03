@@ -29,9 +29,9 @@
     "dist:desktop": "pnpm build:web && pnpm build:desktop && pnpm --filter @acat/desktop run dist"
   },
   "devDependencies": {
-    "electron": "^42.5.0",
-    "prettier": "^3.7.4",
-    "turbo": "^2.9.14",
+    "electron": "^42.5.2",
+    "prettier": "^3.9.4",
+    "turbo": "^2.10.2",
     "typescript": "5.9.2",
     "vitest": "^4.1.9"
   },
