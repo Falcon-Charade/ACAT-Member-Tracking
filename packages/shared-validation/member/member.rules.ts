@@ -70,7 +70,7 @@ export function validateOptionalDateString(value: unknown, fieldName: string): V
     if (value === undefined || value === null) {
         return [];
     }
-    else if (value !== null && typeof value !== 'string') {
+    else if (typeof value !== 'string') {
         return [{
             field: fieldName,
             code: 'invalid_type',
