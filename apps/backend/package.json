@@ -20,7 +20,7 @@
     "@acat/shared-types": "workspace:*"
   },
   "devDependencies": {
-    "@eslint/js": "^9.0.0",
+    "@eslint/js": "^10.0.1",
     "@types/node": "^26.1.0",
     "eslint": "^10.6.0",
     "globals": "^16.0.0",
